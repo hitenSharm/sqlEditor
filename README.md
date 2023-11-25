@@ -23,4 +23,7 @@ All done on a code level, no major optimizations. (Tried implementing a LRU Cach
 ## Further thoughts on optimizations:
 In a real editor, sql query will be executed by the server. It makes it possible to send paginated responses from the backend itself. I personally think that it would be better then sending the complete data to the frontend and paginating on the client as the data might be very large. (Beyond the scope of this project)
 
+## Adding new queries
+Make sure the last keyword of the query being added is the same as the filename in here: https://github.com/hitenSharm/sqlEditor/tree/master/src/csv
 
+For example: select * from territories for territories.csv
