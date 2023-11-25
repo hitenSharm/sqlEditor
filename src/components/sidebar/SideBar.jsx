@@ -1,12 +1,11 @@
-import { EditFilled, PlayCircleFilled, PlayCircleOutlined } from "@ant-design/icons"
-import { Button, Col, Form, Input, Modal, Row, Tooltip, Typography } from "antd"
+import { Col, Form, Input, Modal, Row, Typography } from "antd"
 import { QueryItem } from "./QueryItem"
 import { useState } from "react"
 import TextArea from "antd/es/input/TextArea"
 import { useAppContext } from "../../context/AppContext"
 
-export const SideBar = ({}) => {    
-    const { allQueries, addNewQuery, executeQuery }=useAppContext();
+export const SideBar = () => {    
+    const { allQueries, addNewQuery }=useAppContext();
     
 
     const [isModalOpen, setIsModalOpen] = useState(false);

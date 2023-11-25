@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SQLEditor } from "./components/editor/SqlEditor";
 import { SideBar } from "./components/sidebar/SideBar";
 import { ResultsTable } from "./components/resultTable/Results";

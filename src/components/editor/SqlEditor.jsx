@@ -5,7 +5,8 @@ import { useAppContext } from "../../context/AppContext";
 
 export const SQLEditor = () => {
     const { currentCode } = useAppContext();
-    const [sqlCode, setSqlCode] = useState(currentCode)
+    const [sqlCode, setSqlCode] = useState(currentCode);
+    //not really used but if we want a custom query
 
     return <>
         <div className=" w-full p-4">

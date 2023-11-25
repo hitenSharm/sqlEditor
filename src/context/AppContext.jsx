@@ -1,18 +1,42 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
+import { fetchCsvData } from "../utils";
 
 const AppContext = createContext();
 
-export const AppProvider = ({ children }) => {    
+export const AppProvider = ({ children }) => {
     const [allQueries, setAllQueries] = useState([
         {
-            queryCode: "SELECT * FROM ORDERS",
+            queryCode: "SELECT * FROM orders",
+            queryDesc: "Shows all orders table data here.",
+        },
+        {
+            queryCode: "SELECT * FROM customers",
             queryDesc: "Lorem Ipsum",
         },
         {
-            queryCode: "SELECT * FROM TABLES",
+            queryCode: "SELECT * FROM categories",
+            queryDesc: "Lorem Ipsum",
+        },
+        {
+            queryCode: "SELECT * FROM products",
+            queryDesc: "Lorem Ipsum",
+        },
+        {
+            queryCode: "SELECT * FROM suppliers",
+            queryDesc: "Lorem Ipsum",
+        },
+        {
+            queryCode: "SELECT * FROM shippers",
             queryDesc: "Lorem Ipsum",
         },
     ]);
+
+    const fetchSQLData = useCallback(async (queryCode) => {
+        let tableName = queryCode.split(' ');
+        let [resultData, resultRowsLength] = await fetchCsvData(`${tableName[tableName.length - 1]}.csv`);
+        const data = { resultData, totalRowsInTable: resultRowsLength };
+        return data;
+    }, []);
 
     const addNewQuery = (values) => {
         const updateQueries = [...allQueries, {
@@ -22,16 +46,15 @@ export const AppProvider = ({ children }) => {
         setAllQueries(updateQueries);
     }
 
-    const [currentCode, setCurrentQuery] = useState("--Write query here");
+    const [currentCode, setCurrentCode] = useState("--Write query here");
 
     const executeQuery = (query) => {
-        console.log(query);
-        setCurrentQuery(query);
+        setCurrentCode(query);
     }
 
     return (
         <AppContext.Provider
-            value={{ allQueries, addNewQuery, currentCode, executeQuery }}
+            value={{ allQueries, addNewQuery, currentCode, executeQuery, fetchSQLData }}
         >
             {children}
         </AppContext.Provider>

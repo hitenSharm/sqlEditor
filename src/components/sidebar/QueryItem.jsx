@@ -1,5 +1,5 @@
-import { EditFilled, PlayCircleFilled, PlayCircleOutlined } from "@ant-design/icons"
-import { Button, Col, Input, Row, Tooltip, Typography } from "antd"
+import {  PlayCircleFilled } from "@ant-design/icons"
+import { Button, Row, Tooltip, Typography } from "antd"
 import { useAppContext } from "../../context/AppContext";
 
 export const QueryItem = ({ queryCode, queryDesc }) => {    
