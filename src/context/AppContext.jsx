@@ -31,12 +31,39 @@ export const AppProvider = ({ children }) => {
         },
     ]);
 
+    //implementing LRU cache myself as i was having some trouble
+
+    const [queryCache,setQueryCache]=useState({});
+    const maxCacheSize=10;
+
     const fetchSQLData = useCallback(async (queryCode) => {
+        // Check if the data is in the cache
+        if (queryCache[queryCode]) {
+            // Move the entry to the front of the cache to mark it as most recently used
+            console.log("in cache")
+            const updatedCache = { [queryCode]: queryCache[queryCode], ...queryCache };
+            setQueryCache(updatedCache);
+            return updatedCache[queryCode];
+        }
+
+        // If not in cache, fetch the data
         let tableName = queryCode.split(' ');
         let [resultData, resultRowsLength] = await fetchCsvData(`${tableName[tableName.length - 1]}.csv`);
+
+        // Store the data in the cache
         const data = { resultData, totalRowsInTable: resultRowsLength };
+        const updatedCache = { [queryCode]: data, ...queryCache };
+
+        // Evict the least recently used entry if the cache size exceeds the limit
+        if (Object.keys(updatedCache).length > maxCacheSize) {
+            const [oldestKey] = Object.keys(updatedCache).splice(-1);
+            delete updatedCache[oldestKey];
+        }
+
+        setQueryCache(updatedCache);
+
         return data;
-    }, []);
+    }, [queryCache, maxCacheSize]);
 
     const addNewQuery = (values) => {
         const updateQueries = [...allQueries, {

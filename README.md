@@ -18,7 +18,7 @@ Features:
 Search was not implemented as it seemed redundant to add a search when the user is actually supposed to write a sql query to search in a real editor.
 
 # Optimizations:
-All done on a code level, no major optimizations. (Tried implementing a LRU Cache for queries for quick response and removing the need to parse csv repeatedly but was having some trouble and had shortage of time due to exams). 
+All done on a code level, no major optimizations. Implemented a LRU cache to remove repeated parsing of frequently used data. size was 10. 
 
 ## Further thoughts on optimizations:
 In a real editor, sql query will be executed by the server. It makes it possible to send paginated responses from the backend itself. I personally think that it would be better then sending the complete data to the frontend and paginating on the client as the data might be very large. (Beyond the scope of this project)
