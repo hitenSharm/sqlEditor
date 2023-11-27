@@ -41,7 +41,7 @@ export const AppProvider = ({ children }) => {
         if (queryCache[queryCode]) {
             // Move the entry to the front of the cache to mark it as most recently used
             console.log("in cache")
-            const updatedCache = { [queryCode]: queryCache[queryCode], ...queryCache };
+            const updatedCache = { [queryCode]: queryCache[queryCode], ...queryCache };            
             setQueryCache(updatedCache);
             return updatedCache[queryCode];
         }
@@ -76,7 +76,8 @@ export const AppProvider = ({ children }) => {
     const [currentCode, setCurrentCode] = useState("--Write query here");
 
     const executeQuery = (query) => {
-        setCurrentCode(query);
+        //check validity here
+        setCurrentCode(query);        
     }
 
     return (

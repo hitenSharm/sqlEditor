@@ -1,10 +1,10 @@
+import React, { useState } from "react"
 import { Col, Form, Input, Modal, Row, Typography } from "antd"
 import { QueryItem } from "./QueryItem"
-import { useState } from "react"
 import TextArea from "antd/es/input/TextArea"
 import { useAppContext } from "../../context/AppContext"
 
-export const SideBar = () => {    
+const SideBar = () => {
     const { allQueries, addNewQuery }=useAppContext();
     
 
@@ -20,7 +20,7 @@ export const SideBar = () => {
     };
     const handleCancel = () => {
         setIsModalOpen(false);
-    };
+    };     
 
     return <>
         <Col className="border border-black max-w-fit p-1 m-4 rounded-xl h-fit">
@@ -49,8 +49,11 @@ export const SideBar = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-
-
         </Col>
     </>
 }
+
+export default React.memo(SideBar);
+
+//technically this memoization isnt helping much as we end up with a shallow comparasion and appContext returns a new 
+//reference each time.
