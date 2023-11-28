@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 import { fetchCsvData } from "../utils";
 import { isCodeValid } from "../utils/codeValidation";
 import openNotification from "../utils/notificationUtil";
+import LRUCache from "../utils/lruCache/cache";
 
 const AppContext = createContext();
 
@@ -35,17 +36,16 @@ export const AppProvider = ({ children }) => {
 
     //implementing LRU cache myself as i was having some trouble
 
-    const [queryCache,setQueryCache]=useState({});
+    //const [queryCache,setQueryCache]=useState({});
     const maxCacheSize=10;
+    const queryCache=new LRUCache(maxCacheSize);
 
     const fetchSQLData = useCallback(async (queryCode) => {
         // Check if the data is in the cache
-        if (queryCache[queryCode]) {
+        if (queryCache.get(queryCode)!==-1) {
             // Move the entry to the front of the cache to mark it as most recently used
-            console.log("in cache")
-            const updatedCache = { [queryCode]: queryCache[queryCode], ...queryCache };            
-            setQueryCache(updatedCache);
-            return updatedCache[queryCode];
+            console.log("in cache")            
+            return queryCache.get(queryCode);
         }
 
         // If not in cache, fetch the data
@@ -54,18 +54,10 @@ export const AppProvider = ({ children }) => {
 
         // Store the data in the cache
         const data = { resultData, totalRowsInTable: resultRowsLength };
-        const updatedCache = { [queryCode]: data, ...queryCache };
-
-        // Evict the least recently used entry if the cache size exceeds the limit
-        if (Object.keys(updatedCache).length > maxCacheSize) {
-            const [oldestKey] = Object.keys(updatedCache).splice(-1);
-            delete updatedCache[oldestKey];
-        }
-
-        setQueryCache(updatedCache);
+        queryCache.put(queryCode,data);
 
         return data;
-    }, [queryCache, maxCacheSize]);
+    }, []);
 
     const addNewQuery = (values) => {
         const updateQueries = [...allQueries, {
