@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import { fetchCsvData } from "../utils";
+import { isCodeValid } from "../utils/codeValidation";
+import openNotification from "../utils/notificationUtil";
 
 const AppContext = createContext();
 
@@ -77,7 +79,12 @@ export const AppProvider = ({ children }) => {
 
     const executeQuery = (query) => {
         //check validity here
-        setCurrentCode(query);        
+        if(isCodeValid(query)){
+            setCurrentCode(query);
+        }else{            
+            openNotification('error',"Invalid code");
+        }
+                
     }
 
     return (
