@@ -13,7 +13,7 @@ function App() {
           <SQLEditor/>
           <ResultsTable/>
         </div>
-      </div>
+      </div>      
     </>
   );
 }

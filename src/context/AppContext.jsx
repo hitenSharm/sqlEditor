@@ -34,9 +34,7 @@ export const AppProvider = ({ children }) => {
         },
     ]);
 
-    //implementing LRU cache myself as i was having some trouble
-
-    //const [queryCache,setQueryCache]=useState({});
+    //implementing LRU cache myself as i was having some trouble    
     const maxCacheSize=10;
     const queryCache=new LRUCache(maxCacheSize);
 

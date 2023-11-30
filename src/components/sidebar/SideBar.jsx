@@ -11,11 +11,8 @@ const SideBar = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [myForm] = Form.useForm();
     
-    const handleOk = (values) => {
-        //simple check
-        if (values.code.length > 0 && values.description.length > 0) {
-            addNewQuery(values);
-        } 
+    const handleOk = (values) => {        
+        addNewQuery(values);
         setIsModalOpen(false);
     };
     const handleCancel = () => {
@@ -26,7 +23,7 @@ const SideBar = () => {
         <Col className="border border-black max-w-fit p-1 m-4 rounded-xl h-fit">
             <Row className="text-center flex items-center justify-center">
                 <Typography className=" font-bold">
-                    Frequent Queries
+                Favourite Queries
                 </Typography>
             </Row>
 
@@ -41,10 +38,10 @@ const SideBar = () => {
 
             <Modal title="Add new query" open={isModalOpen} onOk={myForm.submit} onCancel={handleCancel} okButtonProps={{ style: { backgroundColor: '#08c' } }}>
                 <Form form={myForm} onFinish={handleOk}>
-                    <Form.Item label="Code" name={"code"}>
+                    <Form.Item label="Code" name={"code"} rules={[{ required: true, message: 'Please input code!' }]}>
                         <Input placeholder="Add query code" />
                     </Form.Item>
-                    <Form.Item label="Description" name={"description"}>
+                    <Form.Item label="Description" name={"description"} rules={[{ required: true, message: 'Please input description!' }]}>
                         <TextArea placeholder="Add desc" />
                     </Form.Item>
                 </Form>

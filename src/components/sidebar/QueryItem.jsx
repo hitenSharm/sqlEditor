@@ -1,16 +1,10 @@
 import {  PlayCircleFilled } from "@ant-design/icons"
 import { Button, Row, Tooltip, Typography } from "antd"
 import { useAppContext } from "../../context/AppContext";
+import CustomToolTip from "../common/CustomToolTip";
 
 export const QueryItem = ({ queryCode, queryDesc }) => {    
-    const {executeQuery}=useAppContext();
-    // Function to truncate text to the first 15 words for description as it can be longer
-    const truncateText = (text) => {
-        if (text.length > 20) {
-            return text.slice(0, 20) + '...';
-        }
-        return text;
-    };
+    const {executeQuery}=useAppContext();    
 
     return (
         <>
@@ -18,9 +12,9 @@ export const QueryItem = ({ queryCode, queryDesc }) => {
                 <div className=" flex text-center items-center justify-around w-full">
                     <div className=" p-2 w-[180px]">
                         <Typography className=" font-medium">{queryCode}</Typography>
-                        <Tooltip title={queryDesc} placement="bottom">
-                            <Typography className=" border-blue-500 border rounded-xl p-1 mt-2">{truncateText(queryDesc)}</Typography>
-                        </Tooltip>
+                        <CustomToolTip title={queryDesc} condition={queryDesc.length>20} placement="bottom">
+                        <Typography className=" border-blue-500 border rounded-xl p-1 mt-2 ellipsis-container">{queryDesc}</Typography>
+                        </CustomToolTip>
                     </div>
                     <Button className=" items-center flex justify-center w-fit border-0" onClick={()=>executeQuery(queryCode)}>
                         <PlayCircleFilled style={{ fontSize: '20px', color: '#08c' }} />

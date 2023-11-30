@@ -1,8 +1,9 @@
-import { Button, Table } from "antd";
+import { Button, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import { CSVLink } from "react-csv";
 import openNotification from "../../utils/notificationUtil";
+import CustomToolTip from "../common/CustomToolTip";
 
 export const ResultsTable = () => {
   const { currentCode, fetchSQLData } = useAppContext();
@@ -17,15 +18,16 @@ export const ResultsTable = () => {
       //renders here.
       const fetchDataAndSetState = async () => {
         try {
-          const startTime=performance.now();
+          const startTime = performance.now();
           const { resultData, totalRowsInTable } = await fetchSQLData(currentCode);
-          const endTime=performance.now();
+          const endTime = performance.now();
           setData(resultData);
           setTotalRows(totalRowsInTable);
           const elapsedTime = endTime - startTime; //in ms
-          openNotification('success',`Execution time : ${elapsedTime}ms`);
+          openNotification('success', `Execution time : ${elapsedTime}ms`);
           // console.log(resultData);
         } catch (error) {
+          openNotification("error", "Some error occured")
           console.error(error);
         }
       }
@@ -40,7 +42,23 @@ export const ResultsTable = () => {
   const paginatedData = data;
 
   // Assuming the first row in the CSV contains headers
-  const columns = data.length > 0 ? data[0].map((header) => ({ dataIndex: header, title: header })) : [];
+  const columns =
+    data.length > 0
+      ? data[0].map((header) => ({
+        dataIndex: header,
+        title: header,
+        ellipsis: true,
+        render: (text) => {
+          if (text) {
+            return (<CustomToolTip title={text} condition={text.length > 15} placement="topLeft">
+              <span className=" cursor-pointer">{text}</span>
+            </CustomToolTip>)
+          } else {
+            return;//text can take time to receive so if else
+          }
+        },
+      }))
+      : [];
 
   //for downloading...
   const csvData = paginatedData.map((row) =>
