@@ -22,7 +22,7 @@ Search was not implemented as it seemed redundant to add a search when the user 
 
 # Optimizations:
 All done on a code level, no major optimizations. Implemented a LRU cache to remove repeated parsing of frequently used data. size was 10. 
-LRU Cache Improvement:
+LRU Cache Improvement:**(Please note that these screenshots have the old UI)**
 Original:
 ![image](https://github.com/hitenSharm/sqlEditor/assets/56029311/240cc04b-0c7b-4bc6-9247-dc5939da5332)
 After being cached:
