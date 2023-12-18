@@ -5,7 +5,7 @@ import { CSVLink } from "react-csv";
 import openNotification from "../../utils/notificationUtil";
 import CustomToolTip from "../common/CustomToolTip";
 import Typography from "antd/es/typography/Typography";
-import { DownloadOutlined, PlayCircleFilled } from "@ant-design/icons";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export const ResultsTable = () => {
   const { currentCode, fetchSQLData } = useAppContext();

@@ -30,7 +30,7 @@ code {
 .cm-content * {
   /*          ^
   */
-    font-family: 'mono';
+    font-family: 'monospace';
     font-size: 16px;
   }
 
