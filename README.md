@@ -16,6 +16,7 @@ Features:
 - Favorite queries can be added
 - Paginated response
 - Tables and description for queries have a Custom tool tip component, wrap text anywhere using it to get tool tip.
+- When downloading csv, the file name is automatically based on query
 
 Search was not implemented as it seemed redundant to add a search when the user is actually supposed to write a sql query to search in a real editor.
 
