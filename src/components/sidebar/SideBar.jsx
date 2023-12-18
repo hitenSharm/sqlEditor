@@ -20,10 +20,10 @@ const SideBar = () => {
     };     
 
     return <>
-        <Col className="border border-black max-w-fit p-1 m-4 rounded-xl h-fit">
+        <Col className=" bg-codeEditorBg max-w-fit p-4 m-4 rounded-xl h-fit sticky top-0">
             <Row className="text-center flex items-center justify-center">
-                <Typography className=" font-bold">
-                Favourite Queries
+                <Typography className=" font-sans text-white font-bold text-lg">
+                Pinned Queries
                 </Typography>
             </Row>
 
@@ -32,16 +32,20 @@ const SideBar = () => {
                 // key should technically be something else and not index
             })}
 
-            <Row className=" flex justify-center mt-2">
-                <button className=" bg-blue-500 text-white rounded-xl pl-4 pr-4 p-2" onClick={() => setIsModalOpen(true)}>Add new query</button>
+            <Row className=" flex justify-center mt-4">
+                <button className=" bg-greyLight m-4 w-[200px] text-greenFont text-base font-bold font-sans rounded-xl p-2" onClick={() => setIsModalOpen(true)}>Add new query</button>
             </Row>
 
-            <Modal title="Add new query" open={isModalOpen} onOk={myForm.submit} onCancel={handleCancel} okButtonProps={{ style: { backgroundColor: '#08c' } }}>
+            <Modal title="Add new query" open={isModalOpen} onOk={myForm.submit} onCancel={handleCancel} cancelButtonProps={{style:{color:"white", border:"0px"}}} okButtonProps={{ style: { backgroundColor: '#211A2A', color:"#3CDF61", fontFamily:"sans-serif", fontWeight:"bold" } }}>
                 <Form form={myForm} onFinish={handleOk}>
-                    <Form.Item label="Code" name={"code"} rules={[{ required: true, message: 'Please input code!' }]}>
+                    <Form.Item label={
+                        <span className=" text-white text-base font-sans mr-2">SQL Query</span>
+                    } name={"code"} colon={false} rules={[{ required: true, message: 'Please input code!' }]}>
                         <Input placeholder="Add query code" />
                     </Form.Item>
-                    <Form.Item label="Description" name={"description"} rules={[{ required: true, message: 'Please input description!' }]}>
+                    <Form.Item label={
+                        <span className=" text-white text-base font-sans">Description</span>
+                    }  name={"description"} colon={false} rules={[{ required: true, message: 'Please input description!' }]}>
                         <TextArea placeholder="Add desc" />
                     </Form.Item>
                 </Form>

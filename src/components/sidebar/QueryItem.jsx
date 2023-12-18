@@ -8,16 +8,18 @@ export const QueryItem = ({ queryCode, queryDesc }) => {
 
     return (
         <>
-            <Row className="mt-2">
+            <Row className="mt-4 bg-greyDark rounded-2xl p-2">
                 <div className=" flex text-center items-center justify-around w-full">
-                    <div className=" p-2 w-[180px]">
-                        <Typography className=" font-medium">{queryCode}</Typography>
+                    <div className=" p-2 w-[200px]">
+                        <div className=" w-full">
+                        <Typography className=" font-medium text-greenFont font-mono text-md">{queryCode}</Typography>
+                        </div>
                         <CustomToolTip title={queryDesc} condition={queryDesc.length>20} placement="bottom">
-                        <Typography className=" border-blue-500 border rounded-xl p-1 mt-2 ellipsis-container">{queryDesc}</Typography>
+                        <Typography className=" bg-greyLight border-greenFont text-white rounded-xl font-semibold font-sans p-3 mt-2 ellipsis-container">{queryDesc}</Typography>
                         </CustomToolTip>
                     </div>
-                    <Button className=" items-center flex justify-center w-fit border-0" onClick={()=>executeQuery(queryCode)}>
-                        <PlayCircleFilled style={{ fontSize: '20px', color: '#08c' }} />
+                    <Button className=" items-center p-1 flex justify-center w-fit border-0" onClick={()=>executeQuery(queryCode)}>
+                        <PlayCircleFilled style={{ fontSize: '25px', color: 'white' }} />
                     </Button>
                 </div>
             </Row></>

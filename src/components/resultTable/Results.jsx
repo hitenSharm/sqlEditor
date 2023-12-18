@@ -4,6 +4,8 @@ import { useAppContext } from "../../context/AppContext";
 import { CSVLink } from "react-csv";
 import openNotification from "../../utils/notificationUtil";
 import CustomToolTip from "../common/CustomToolTip";
+import Typography from "antd/es/typography/Typography";
+import { DownloadOutlined, PlayCircleFilled } from "@ant-design/icons";
 
 export const ResultsTable = () => {
   const { currentCode, fetchSQLData } = useAppContext();
@@ -24,7 +26,7 @@ export const ResultsTable = () => {
           setData(resultData);
           setTotalRows(totalRowsInTable);
           const elapsedTime = endTime - startTime; //in ms
-          openNotification('success', `Execution time : ${elapsedTime}ms`);
+          openNotification('success', `Execution time : ${elapsedTime.toFixed(2)}ms`);
           // console.log(resultData);
         } catch (error) {
           openNotification("error", "Some error occured")
@@ -69,12 +71,8 @@ export const ResultsTable = () => {
   );
 
   return (
-    <>
-      {data.length > 0 ? <Button className=" mb-4">
-        <CSVLink data={csvData} filename="exported_data.csv">
-          Download as CSV
-        </CSVLink>
-      </Button> : <></>}
+    <>      
+      <div className=" p-6 pb-2">
       <Table
         dataSource={paginatedData.slice(1).map((row, rowIndex) => {
           // Mapped each row to an object with keys based on header names
@@ -90,8 +88,31 @@ export const ResultsTable = () => {
           total: totalRows,
           defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'],
           onChange: handlePageChange,
+          itemRender: (current, type, originalElement) => {
+            if (type === 'prev') {
+              //for some reason tailwind wasnt working
+              return <button style={{color:"white", fontWeight:"bold"}}> {"<"} </button>;
+            }
+            if (type === 'next') {
+              return <button style={{color:"white", fontWeight:"bold"}}> {">"} </button>;
+            }            
+            return originalElement;
+          },
         }}
       />
+      </div>
+      {data.length > 0 ? <div className="w-full flex justify-end pr-4 mb-8">
+        <Button className=" ml-4  bg-greyDark rounded-xl border-0 w-[180px] h-12 ">
+        <CSVLink data={csvData} filename={`${currentCode.split(' ')[currentCode.split(' ').length-1]}.csv`} className="flex justify-center items-center gap-2">
+          {/* File name is now based on query */}
+        <DownloadOutlined className="font-sans text-base font-bold text-white"/>
+            <Typography className="font-sans text-base font-bold text-greenFont">
+                Download CSV
+            </Typography>
+            
+        </CSVLink>
+      </Button> 
+      </div>: <></>}
     </>
   );
 }
